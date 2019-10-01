@@ -25,11 +25,18 @@ public class StringCalculator {
         findNegative(stringForCalc);
 
         int answer = 0;
-        for(String s :stringForCalc) {
-            answer += Integer.parseInt(s);
-        }
 
-        return answer;
+        // 추가적으로 input 값에 숫자가 아닌 무언가가 있다면 Exception 처리를 해준다.
+        try {
+            for(String s :stringForCalc) {
+                answer += Integer.parseInt(s);
+            }
+
+            return answer;
+        } catch (Exception e) {
+            System.out.println("some values are not a number");
+            throw e;
+        }
     }
 
     // 계산을 해야하는 부분을 split 해준다.

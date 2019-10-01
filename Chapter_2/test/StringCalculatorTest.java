@@ -11,7 +11,7 @@ public class StringCalculatorTest {
 
     StringCalculator stringCalculator;
 
-    final String rawString = "1,2:4";
+    final String rawString = "1,2:할";
 //    final String rawString = "//;\n1;2;4";
 
     @Before
@@ -39,13 +39,9 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void getRawString() {
-    }
-
-    @Test
     public void splitRawString() {
         System.out.println(Arrays.toString(stringCalculator.splitRawString()));
-//        System.out.println(Arrays.toString(stringCalculator.splitRawString("1,2:5")));
+        assertArrayEquals(stringCalculator.splitRawString(), new String[]{"1", "2", "4"});
 
     }
 
@@ -65,5 +61,9 @@ public class StringCalculatorTest {
         assertEquals(stringCalculator.addAll(), 7);
     }
 
+    @Test(expected = Exception.class)
+    public void addAllExceptionTest() {
+        stringCalculator.addAll();
+    }
 
 }
