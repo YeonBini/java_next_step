@@ -28,6 +28,7 @@ Practice for Next_Step book
 ### Chapter 5. 
 > java 파일에서 파일 경로 설정 
 - './'로 설정하면 프로그램의 root로 인식을 하는 건가?
+    * 정적 콘텐츠(html, css, javascript)의 경우에는 리소스이기 때문에 .., ..., ../ 등으로 상대경로를 지정하지만, 동적 콘텐츠의 경우(class 파일) 프로젝트 폴더를 기준으로 경로가 설정이 된다. (예: ./로 하면 프로젝트 폴더의 1depth이다.)
 
 > java i/o package 정리
 - 자바에서 데이터는 스트림(Stream)을 통해 입출력 된다. 
