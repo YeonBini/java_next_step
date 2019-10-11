@@ -41,3 +41,18 @@ Practice for Next_Step book
 |FileInputStream/FileOutputStream</br>DataInputStream/DataOutputStream</br>ObjectInputStream/ObjectOutputStream</br>PrintStream</br>BufferedInputStream/BufferedOutputStream|바이트 단위 입출력을 위한 하위 스트림
 |Reader/Writer|문자 단위 입출력을 위한 최상위 스트림 클래스|
 |FileReader/FileWriter</br>InputStreamReader/InputStreamWriter</br>PrintWriter</br>BufferedReader/BufferedWriter|문자 단위 입출력을 위한 하위 스트림 클래스|
+
+> 생각할 거리들 
+- 독립적으로 존재하는 상수 값은 굳이 enum으로 추가할 필요는 없지만, 남자(M), 여자(F) 또는 동,서,남,북 과 같이 상수값이 연관성을 가지는 경우 enum을 사용하기 적합하다. (예 :  GET, POST)
+- 객체지향 설계를 처음 연습할 때 요구사항이 명확하지 않은 애플리케이션을 개발하기 보다 "지뢰찾기", "체스게임" 등 이미 요구사항이 명확한 애플리케이션으로 연습하는 것을 추천
+- OCP(Open-Closed Principle) 원칙 : 요구사항의 변경이나 추가사항이 발생하더라도 기존 구성요소는 수정이 일어나지 말아야 하며, 기존 구성요소를 쉽게 확장해서 재사용할 수 있어야 한다.
+- 서블릿은 앞에서 구현한 웹서버의 Controller, HttpRequest, HttpResponse를 추상화해 인터페이스로 정의해 놓은 표준. 서블릿은 웹서비스를 위한 인터페이스로, 원칙적으로는 javax.servlet.Servlet 인터페이스의 구현체. 일반적인 java 독립 실행프로그램과는 달리 main 메서드가 없으며, 서블릿 컨테이너에 등록된 후 컨테이너에 의해 생성, 호출, 소멸이 일어난다. 
+서블릿 컨테이너는 이러한 서블릿을 관리하며 네트워크 통신, 서블릿의 생명주기 관리, 스레드 기반의 병렬처리를 대행한다. 즉, 웹 클라이언트로 부터 HTTP 요청이 전달되면 해당 HTTP 요청을 해석하여 적정한 서블릿의 service 메서드를 ServletRequet, ServletResponse 매개변수와 함께 호출.
+- 서블릿 컨테이너는 요청이 들어올 때 마다 새로운 java thread를 만든다. 우리가 알고 있는 대표적인 서블릿 컨테이너가 Tomcat이다. Tomcat같은 was가 java 파일을 컴파일해서 class 파일을 만들고 메모리에 올려 서블릿 객체를 만든다.
+- 컨테이너는 기본적으로 생명주기를 관리하는 기능을 제공한다. 컨테이너에 의해 인스턴스가 관리되기 때문에 초기화, 소멸과 같은 작업을 위한 메소드를 인터페이스 규약으로 만들어 놓고 확장할 수 있도록 지원하는 것이다.
+- github의 특정 브랜치를 그대로 로컬에 생성하기
+
+> 원격 저장소의 브랜치 로컬에 생성
+~~~
+git checkout -b step0-getting-started origin/step0-getting-started
+~~~
