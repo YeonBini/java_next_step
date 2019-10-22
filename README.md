@@ -57,3 +57,53 @@ Practice for Next_Step book
 ~~~
 git checkout -b step0-getting-started origin/step0-getting-started
 ~~~
+
+### Chapter 6.
+- UpdateUserServlet 에서 user정보 update 시 database를 호출하지 않아도 되는 것은 Database에서 addUser시 User 메모리 위치를 추가하기 때문에  해당 메모리 위치의 User 정보만 바꾸어주면 자동적으로 update가 된다.
+- 세션이 상태 데이터를 웹 서버에서 관리한다는 점만 다를 뿐 HTTP에서 상태 값을 유지하기 위한 값을 전달할 때는 쿠키를 사용한다.
+- @WebServlet에서 loadOnStartUp 조건 
+    - 보통의 서블릿은 해당 서블릿에 최초 요청이 들어올 때에만 해당 인스턴스화 초기 설정을 하게 되는데, 이는 시간이 오래 걸리기 때문에 Context의 웹 애플리케이션이 톰캣에 의해 인식되는 시점에 서블릿이 초기화 되도록 설정하는 것 
+    - 음수일 때는 톰캣 실행 시 자동으로 서블릿 호출되지 않으며, 양수일 때 0에 가까울수록 먼저 초기화됨. 같은 숫자가 mapping되었을 경우 먼저 작성된 서블릿부터 초기화됨
+- [SerialVersionUID 생성 이유는?](http://woowabros.github.io/experience/2017/10/17/java-serialize.html) 
+    - Serializable을 상속받은 객체이기 때문에(DispatcherServelt, Exception) 
+    - 서블릿 기반의 WAS(톰캣, 웹로직 등)들은 대부분 세션의 자바 직렬화를 지원하고 있습니다.물론 단순히 세션을 서블릿 메모리 위에서 운용한다면 직렬화를 필요로 하지 않지만, 파일로 저장하거나 세션 클러스터링, DB를 저장하는 옵션 등을 선택하게 되면 세션 자체가 직렬화가 되어 저장되어 전달됩니다.
+- tomcat에서는 localhost:8080경로로 들어왔을 때 기본적으로 index.jsp, index.html 파일을 먼저 찾는다. 
+    - index.jsp 파일을  home.jsp파일로 변경하였음.
+- dispatcherServlet에서  urlmapping을 "/" 로 해주는 것은 jsp 파일은 기본 톰캣 설정에서 찾게하며, 나머지 동적인 영역에 대해서 처리를 해주기 위함이다.
+> shell script
+```
+    wget http://apache.mirror.cdnetworks.com/tomcat/tomcat-8/v8.5.47/bin/apache-tomcat-8.5.47.tar.gz
+    gunzip apache-tomcat-8.5.47.tar.gz
+    # -x : 압축해제, -v : 진행율, -f : 파일 
+    tar -xvf apache-tomcat-8.5.47.tar
+    ln -s apache-tomcat-8.5.47/ tomcat
+    git checkout -b origin/step1-user-completed-no-database
+    rm -rf /home/yeonbn/tomcat/webapps/ROOT
+    cp -r jwp-basic /home/yeonbn/tomcat/webapps/ROOT
+```
+### Chapter7
+- ContextLoaderListener 
+    - 톰캣 서버가 시작할 때 contextInitialized() 메소드를 호출하여 초기화 작업 실행 
+    - ContextLoaderListener는 ServeletContextListener 인터페이스를 구현하고 있으며 @WebListener 애노테이션이 설정되어 있다. 이 경우 서블릿 컨테이너를 시작하는 과정에서 contextInitialized() 메소드를 호출해 초기화 작업을 진행한다. 
+    - 서블릿 초기화가 해당 서블릿과 관련한 초기화를 담당한다면 ServletContextListener 초기화는 웹 애플리케이션 전체에 영향을 미치는 초기화가 필요한 경우 활용할 수 있다.
+- PreparedStatement에서 setValue 메소드 호출 시 리턴 값 없이 세팅만 해주어도 PreparedStatement에 반영이 왜 되는거지?
+- PreparedStatementMapper, RowMapper 인터페이스 생성 
+    - 메소드 하나만 가지는 인터페이스를 생성한 후 필요에 따라 메소드의 인자로 전달해 앞 단계에서 발생한 문제점을 해결했다. 즉, 변화 시점이 다른 부분을 서로 다른 인터페이스로 분리함으로써 공통 라이브러리에 대한 유연함을 높일 수 있게 되었다. 이 예제에서 사용한 인터페이스를 콜백(callback) 인터페이스라고 부른다. 
+    - 콜백 인터페이스는 함수형 언어에서 함수를 메소드의 인자로 전달함으로써 유연함을 얻는 것과 같다. 자바가 인터페이스를 사용할 수밖에 없는 이유는 기본단위가 함수가 아닌 클래스이기 때문이다.
+- Runtime Exception, Compile Exception 
+    - [http://www.nextree.co.kr/p3239/](http://www.nextree.co.kr/p3239/)
+- try-with-resource 구문에 사용할 클래스는  java.io.AutoClosable을 상속하고 있어야 한다.
+    - Connection, PreparedStatement, ResultSet
+- 제네릭을 사용하여 리팩토링 하면 데이터 조회 시 굳이 캐스팅을 하지 않아도 된다.
+- 람다를 사용하려면 인터페이스의 메소드가 하나만 존재해야 한다. 또한 람다 표현식으로 사용할 인터페이스라고 지정하려면 인터페이스에 @FunctionalInterface 애노테이션을 추가해야한다.
+- filter와 interceptor의 사용 사례
+    - filter 
+    - interceptor : 로깅 
+
+### Chapter8
+
+- model hashcode와 equals를 상속해야하는 이유에 대해서 
+→[https://minwan1.github.io/2018/07/03/2018-07-03-equals,hashcode/](https://minwan1.github.io/2018/07/03/2018-07-03-equals,hashcode/)
+- 자바스크립트의 this는 해당 함수를 누가 호출하느냐에 따라 this 가 변경된다....... 자바스크립트의 this에 대해 더 깊이 있게 학습하려면 자바스크립트 문서에서 Scope를 다루는 부분을 학습하면 된다. 이 부분을 학습하다보면 자바스크립트의 apply(), call(), bind() 함수도 등장하는데 이 세 함수의 차이점에 대해서도 학습해야 한다.
+- ModelAndView를 만들어서 controller와 view에서 만들었던 model를 만들고, View는 주입을 받는다.
+- db trigger로 답변 갯수를 기록할 수는 없을까?
