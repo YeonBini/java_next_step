@@ -67,6 +67,7 @@ git checkout -b step0-getting-started origin/step0-getting-started
 - [SerialVersionUID 생성 이유는?](http://woowabros.github.io/experience/2017/10/17/java-serialize.html) 
     - Serializable을 상속받은 객체이기 때문에(DispatcherServelt, Exception) 
     - 서블릿 기반의 WAS(톰캣, 웹로직 등)들은 대부분 세션의 자바 직렬화를 지원하고 있습니다.물론 단순히 세션을 서블릿 메모리 위에서 운용한다면 직렬화를 필요로 하지 않지만, 파일로 저장하거나 세션 클러스터링, DB를 저장하는 옵션 등을 선택하게 되면 세션 자체가 직렬화가 되어 저장되어 전달됩니다.
+    - Exception 정의 시 SerialVersionUID가 중복되어도 괜찮은건가??
 - tomcat에서는 localhost:8080경로로 들어왔을 때 기본적으로 index.jsp, index.html 파일을 먼저 찾는다. 
     - index.jsp 파일을  home.jsp파일로 변경하였음.
 - dispatcherServlet에서  urlmapping을 "/" 로 해주는 것은 jsp 파일은 기본 톰캣 설정에서 찾게하며, 나머지 동적인 영역에 대해서 처리를 해주기 위함이다.
